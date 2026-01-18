@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.example.btremote.app-merged_res-25:/layout_activity_main.xml.flat",
+        "source": "com.example.btremote.app-main-27:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.btremote.app-merged_res-25:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.btremote.app-main-27:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.btremote.app-merged_res-25:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.btremote.app-main-27:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    }
+]

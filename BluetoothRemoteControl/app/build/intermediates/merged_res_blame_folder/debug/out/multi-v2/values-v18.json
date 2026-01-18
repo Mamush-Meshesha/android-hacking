@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.btremote.app-mergeDebugResources-23:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "/home/mamush/.gradle/caches/8.14.3/transforms/eef23a2cec948c98f07e1996ee3844c1/transformed/appcompat-1.4.1/res/values-v18/values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}

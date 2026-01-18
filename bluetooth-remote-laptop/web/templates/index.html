@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluetoothOS</title>
+    <link rel="stylesheet" href="/static/css/os.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Desktop -->
+    <div class="desktop" id="desktop">
+        <div class="icon" onclick="openWindow('files')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Files">
+            <span>File Explorer</span>
+        </div>
+        <div class="icon" onclick="openWindow('sms')">
+            <img src="https://cdn-icons-png.flaticon.com/512/724/724715.png" alt="SMS">
+            <span>Messages</span>
+        </div>
+        <div class="icon" onclick="openWindow('terminal')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2942/2942924.png" alt="Terminal">
+            <span>Terminal</span>
+        </div>
+        <div class="icon" onclick="openWindow('settings')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2040/2040504.png" alt="Settings">
+            <span>Settings</span>
+        </div>
+        <div class="icon" onclick="openWindow('recorder')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2983/2983706.png" alt="Recorder">
+            <span>Recorder</span>
+        </div>
+        <div class="icon" onclick="openWindow('camera')">
+            <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" alt="Camera">
+            <span>Camera</span>
+        </div>
+    </div>
+
+    <!-- Windows Container -->
+    <div id="windows-container"></div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <button class="start-btn">
+            <i class="fab fa-android"></i> Start
+        </button>
+        <div class="taskbar-items" id="taskbar-items">
+            <!-- Active windows -->
+        </div>
+        <div class="system-tray">
+            <span id="connection-status">Disconnected</span>
+            <div class="status-indicator" id="status-dot"></div>
+            <span id="clock">12:00</span>
+        </div>
+    </div>
+
+    <!-- Templates for Window Content -->
+    <template id="tpl-files">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="path-input" value="/sdcard" style="flex: 1; padding: 5px;">
+            <button onclick="listFiles()">Go</button>
+        </div>
+        <div class="file-list" id="file-grid">
+            <div style="text-align: center; color: #94a3b8; grid-column: 1/-1;">Select a folder...</div>
+        </div>
+    </template>
+
+    <template id="tpl-sms">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <button onclick="listSms()">Refresh Inbox</button>
+            <button onclick="showSendSmsDialog()">New Message</button>
+        </div>
+        <div class="sms-list" id="sms-container">
+            <div style="text-align: center; color: #94a3b8;">No messages loaded</div>
+        </div>
+    </template>
+
+    <template id="tpl-send-sms">
+        <div style="display: flex; flex-direction: column; gap: 10px; height: 100%;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <label style="width: 60px;">To:</label>
+                <input type="text" id="sms-to" placeholder="+1234567890" style="flex: 1; padding: 5px;">
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
+                <label>Message:</label>
+                <textarea id="sms-body" style="flex: 1; padding: 5px; resize: none;"></textarea>
+            </div>
+            <button onclick="submitSms()"
+                style="padding: 8px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">Send</button>
+        </div>
+    </template>
+
+    <template id="tpl-terminal">
+        <div class="terminal-output" id="term-out"></div>
+    </template>
+
+    <template id="tpl-recorder">
+        <div style="text-align: center; padding: 20px;">
+            <h3>Voice Recorder</h3>
+            <div id="recorder-status" style="font-size: 1.2em; margin-bottom: 20px;">Ready to record</div>
+            <div id="recorder-timer" style="font-size: 2em; font-family: monospace; margin-bottom: 30px;">00:00</div>
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <button id="btn-start-record" onclick="startRecording()"
+                    style="background: #ef4444; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold;">START</button>
+                <button id="btn-stop-record" onclick="stopRecording()" disabled
+                    style="background: #64748b; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold;">STOP</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-camera">
+        <div style="padding: 20px;">
+            <h3 style="text-align: center; margin-bottom: 20px;">📷 Camera & Screenshots</h3>
+
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+                <button onclick="takePhoto('rear')"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    📷 Rear Camera
+                </button>
+                <button onclick="takePhoto('front')"
+                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    🤳 Front Camera
+                </button>
+                <button onclick="takeScreenshot()"
+                    style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    📱 Screenshot
+                </button>
+            </div>
+
+            <h4 style="margin-bottom: 15px; color: #64748b;">Recent Captures</h4>
+            <div id="camera-gallery"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; max-height: 400px; overflow-y: auto;">
+                <div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 40px;">
+                    No images yet. Take a photo or screenshot to get started!
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-settings">
+        <h3>Connection</h3>
+        <div style="margin-bottom: 20px;">
+            <p><b>Mode:</b> WiFi / Internet</p>
+            <p>To connect:</p>
+            <ol style="padding-left: 20px; margin-top: 5px;">
+                <li>Open App on Phone</li>
+                <li>Enter PC IP Address</li>
+                <li>Click "Connect WiFi"</li>
+            </ol>
+            <div id="connection-status"
+                style="margin-top: 10px; padding: 10px; background: #f1f5f9; border-radius: 4px;">
+                Status: <span id="status-indicator" style="color: #ef4444;">Disconnected</span>
+            </div>
+            <button onclick="checkConnection()" style="width: 100%; margin-top: 10px;">Check Connection</button>
+        </div>
+
+        <h3>Volume</h3>
+        <input type="range" min="0" max="100" onchange="setVolume(this.value)">
+    </template>
+
+    <script>
+        // --- Window Management ---
+        let zIndex = 100;
+
+        function openWindow(appId) {
+            const container = document.getElementById('windows-container');
+            const win = document.createElement('div');
+            win.className = 'window';
+            win.style.zIndex = ++zIndex;
+            win.style.left = (50 + Math.random() * 50) + 'px';
+            win.style.top = (50 + Math.random() * 50) + 'px';
+
+            // Custom size for Send SMS
+            if (appId === 'send-sms') {
+                win.style.width = '400px';
+                win.style.height = '300px';
+            } else {
+                win.style.width = '600px';
+                win.style.height = '400px';
+            }
+
+            let title = appId.charAt(0).toUpperCase() + appId.slice(1);
+            if (appId === 'send-sms') title = 'New Message';
+
+            win.innerHTML = `
+                <div class="title-bar" onmousedown="startDrag(event, this.parentElement)">
+                    <span>${title}</span>
+                    <div class="window-controls">
+                        <button onclick="this.closest('.window').remove()">X</button>
+                    </div>
+                </div>
+                <div class="window-content" id="content-${appId}-${Date.now()}">
+                    <!-- Content injected here -->
+                </div>
+            `;
+
+            container.appendChild(win);
+
+            // Inject content
+            const contentId = win.querySelector('.window-content').id;
+            const tpl = document.getElementById('tpl-' + appId);
+            if (tpl) {
+                document.getElementById(contentId).appendChild(tpl.content.cloneNode(true));
+            }
+
+            // Bring to front on click
+            win.addEventListener('mousedown', () => {
+                win.style.zIndex = ++zIndex;
+            });
+        }
+
+        // Draggable Logic
+        let isDragging = false;
+        let currentWindow = null;
+        let offset = { x: 0, y: 0 };
+
+        function startDrag(e, win) {
+            isDragging = true;
+            currentWindow = win;
+            offset.x = e.clientX - win.offsetLeft;
+            offset.y = e.clientY - win.offsetTop;
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && currentWindow) {
+                currentWindow.style.left = (e.clientX - offset.x) + 'px';
+                currentWindow.style.top = (e.clientY - offset.y) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            currentWindow = null;
+        });
+
+        // --- API & WebSocket ---
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const ws = new WebSocket(`${wsProtocol}//${window.location.host}/ws`);
+
+        ws.onopen = () => {
+            logToTerminal("Connected to Server");
+        };
+
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'log') {
+                logToTerminal(msg.message);
+            } else if (msg.type === 'status') {
+                updateStatus(msg.status);
+            } else if (msg.type === 'notification') {
+                handleNotification(msg.data);
+            } else if (msg.type === 'file_ready') {
+                logToTerminal(`✓ File downloaded: ${msg.filename}`);
+                window.open(msg.url, '_blank');
+            }
+        };
+
+        function logToTerminal(text) {
+            const term = document.getElementById('term-out');
+            if (term) {
+                const line = document.createElement('div');
+                line.innerText = `> ${text}`;
+                term.appendChild(line);
+                term.scrollTop = term.scrollHeight;
+            }
+        }
+
+        function updateStatus(status) {
+            const el = document.getElementById('status-indicator');
+            if (el) {
+                el.innerText = status === 'connected' ? 'Connected' : 'Disconnected';
+                el.style.color = status === 'connected' ? '#22c55e' : '#ef4444';
+            }
+
+            // Also update desktop status if needed
+            if (status === 'connected') {
+                logToTerminal("Device Connected via WiFi!");
+            } else {
+                logToTerminal("Device Disconnected");
+            }
+        }
+
+        async function checkConnection() {
+            logToTerminal("Checking connection...");
+            const res = await fetch('/api/scan', { method: 'POST' });
+            const data = await res.json();
+
+            if (data.devices && data.devices.length > 0) {
+                updateStatus('connected');
+                logToTerminal("Found connected device!");
+            } else {
+                updateStatus('disconnected');
+                logToTerminal("No device connected. Please open App.");
+            }
+        }
+
+        // --- App Logic ---
+
+        async function disconnect() {
+            await fetch('/api/disconnect', { method: 'POST' });
+        }
+
+        async function listFiles() {
+            const input = document.querySelector('#path-input'); // Get the visible one
+            // Note: This is a hack, ideally we scope to the active window
+            // For now, we just grab the first one found or we need to pass context
+            // Let's assume the user interacts with the open window
+            const path = input ? input.value : '/sdcard';
+
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'list_files', payload: { path } })
+            });
+        }
+
+        async function listSms() {
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'list_sms', payload: { limit: 50 } })
+            });
+        }
+
+        function showSendSmsDialog() {
+            openWindow('send-sms');
+        }
+
+        async function submitSms() {
+            const numberInput = document.querySelector('#sms-to');
+            const messageInput = document.querySelector('#sms-body');
+
+            if (!numberInput || !messageInput) return;
+
+            const number = numberInput.value;
+            const message = messageInput.value;
+
+            if (!number || !message) {
+                alert("Please fill in both fields");
+                return;
+            }
+
+            await sendSms(number, message);
+
+            // Close window
+            numberInput.closest('.window').remove();
+        }
+
+        async function sendSms(number, message) {
+            logToTerminal(`Sending SMS to ${number}...`);
+            const res = await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'send_sms',
+                    payload: { number, message }
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                logToTerminal("✓ SMS Sent!");
+            } else {
+                logToTerminal("✗ Failed to send SMS");
+            }
+        }
+
+        function handleNotification(data) {
+            // Check if it's a file list or sms list
+            if (data.status === 'list_files') {
+                try {
+                    const content = JSON.parse(data.message);
+                    renderFiles(content.files);
+                } catch (e) { console.error(e); }
+            } else if (data.status === 'list_sms') {
+                try {
+                    const content = JSON.parse(data.message);
+                    renderSms(content.messages);
+                } catch (e) { console.error(e); }
+            } else if (data.status === 'recording_finished') {
+                try {
+                    const content = JSON.parse(data.message);
+                    logToTerminal(`✓ Recording finished: ${content.path}`);
+                    downloadFile(content.path);
+
+                    // Reset UI
+                    const status = document.getElementById('recorder-status');
+                    if (status) status.innerText = "Ready to record";
+                    const startBtn = document.getElementById('btn-start-record');
+                    if (startBtn) startBtn.disabled = false;
+                    const timer = document.getElementById('recorder-timer');
+                    if (timer) timer.innerText = "00:00";
+                } catch (e) { console.error(e); }
+            } else if (data.type === 'file_ready') {
+                const isImage = data.filename.match(/\.(jpg|jpeg|png|gif|bmp)$/i);
+                if (isImage) {
+                    addToGallery(data.url, data.filename);
+                }
+                logToTerminal(`✓ File downloaded: ${data.filename}`);
+                window.open(data.url, '_blank');
+            } else {
+                logToTerminal("Notification: " + JSON.stringify(data));
+            }
+        }
+
+        function renderFiles(files) {
+            const grids = document.querySelectorAll('.file-list');
+            grids.forEach(grid => {
+                grid.innerHTML = '';
+                files.forEach(f => {
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    div.innerHTML = `
+                        <div class="file-icon">${f.is_dir ? '📁' : '📄'}</div>
+                        <div style="font-size:12px; word-break:break-all;">${f.name}</div>
+                    `;
+
+                    // Left click: Navigate (if dir)
+                    div.onclick = () => {
+                        if (f.is_dir) {
+                            const inputs = document.querySelectorAll('#path-input');
+                            inputs.forEach(i => i.value = i.value.replace(/\/$/, '') + '/' + f.name);
+                            listFiles();
+                        }
+                    };
+
+                    // Right click: Context Menu
+                    div.oncontextmenu = (e) => {
+                        e.preventDefault();
+                        showContextMenu(e.pageX, e.pageY, f);
+                    };
+
+                    grid.appendChild(div);
+                });
+            });
+        }
+
+        // Context Menu Logic
+        function showContextMenu(x, y, file) {
+            // Remove existing
+            const existing = document.querySelector('.context-menu');
+            if (existing) existing.remove();
+
+            const menu = document.createElement('div');
+            menu.className = 'context-menu';
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+
+            const currentPath = document.querySelector('#path-input').value.replace(/\/$/, '');
+            const fullPath = currentPath + '/' + file.name;
+
+            let items = [];
+
+            if (!file.is_dir) {
+                items.push({ label: 'Download & View', action: () => downloadFile(fullPath) });
+                items.push({ label: 'Open on Phone', action: () => openFile(fullPath) });
+                items.push({ label: 'Copy to...', action: () => copyFile(fullPath) });
+            } else {
+                items.push({
+                    label: 'Open', action: () => {
+                        const inputs = document.querySelectorAll('#path-input');
+                        inputs.forEach(i => i.value = fullPath);
+                        listFiles();
+                    }
+                });
+            }
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'context-menu-item';
+                div.innerText = item.label;
+                div.onclick = () => {
+                    item.action();
+                    menu.remove();
+                };
+                menu.appendChild(div);
+            });
+
+            document.body.appendChild(menu);
+        }
+
+        // Close menu on click elsewhere
+        document.addEventListener('click', () => {
+            const existing = document.querySelector('.context-menu');
+            if (existing) existing.remove();
+        });
+
+        async function openFile(path) {
+            logToTerminal(`Opening ${path}...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'open_file', payload: { path } })
+            });
+        }
+
+        async function copyFile(source) {
+            const dest = prompt("Enter destination path:", source + ".copy");
+            if (!dest) return;
+
+            logToTerminal(`Copying to ${dest}...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'copy_file', payload: { source, dest } })
+            });
+        }
+
+        async function downloadFile(path) {
+            logToTerminal(`Downloading ${path}...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'read_file', payload: { path } })
+            });
+        }
+
+        function renderFiles(files) {
+            const grids = document.querySelectorAll('.file-list');
+            grids.forEach(grid => {
+                grid.innerHTML = '';
+                files.forEach(f => {
+                    const div = document.createElement('div');
+                    div.className = 'file-item';
+                    div.innerHTML = `
+                        <div class="file-icon">${f.is_dir ? '📁' : '📄'}</div>
+                        <div style="font-size:12px; word-break:break-all;">${f.name}</div>
+                    `;
+
+                    // Left click: Navigate (if dir)
+                    div.onclick = () => {
+                        if (f.is_dir) {
+                            const inputs = document.querySelectorAll('#path-input');
+                            inputs.forEach(i => i.value = i.value.replace(/\/$/, '') + '/' + f.name);
+                            listFiles();
+                        }
+                    };
+
+                    // Right click: Context Menu
+                    div.oncontextmenu = (e) => {
+                        e.preventDefault();
+                        showContextMenu(e.pageX, e.pageY, f);
+                    };
+
+                    grid.appendChild(div);
+                });
+            });
+        }
+
+        // Context Menu Logic
+        function showContextMenu(x, y, file) {
+            // Remove existing
+            const existing = document.querySelector('.context-menu');
+            if (existing) existing.remove();
+
+            const menu = document.createElement('div');
+            menu.className = 'context-menu';
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+
+            const currentPath = document.querySelector('#path-input').value.replace(/\/$/, '');
+            const fullPath = currentPath + '/' + file.name;
+
+            let items = [];
+
+            if (!file.is_dir) {
+                items.push({ label: 'Open on Phone', action: () => openFile(fullPath) });
+                items.push({ label: 'Copy to...', action: () => copyFile(fullPath) });
+            } else {
+                items.push({
+                    label: 'Open', action: () => {
+                        const inputs = document.querySelectorAll('#path-input');
+                        inputs.forEach(i => i.value = fullPath);
+                        listFiles();
+                    }
+                });
+            }
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'context-menu-item';
+                div.innerText = item.label;
+                div.onclick = () => {
+                    item.action();
+                    menu.remove();
+                };
+                menu.appendChild(div);
+            });
+
+            document.body.appendChild(menu);
+        }
+
+        // Close menu on click elsewhere
+        document.addEventListener('click', () => {
+            const existing = document.querySelector('.context-menu');
+            if (existing) existing.remove();
+        });
+
+        async function openFile(path) {
+            logToTerminal(`Opening ${path}...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'open_file', payload: { path } })
+            });
+        }
+
+        async function copyFile(source) {
+            const dest = prompt("Enter destination path:", source + ".copy");
+            if (!dest) return;
+
+            logToTerminal(`Copying to ${dest}...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'copy_file', payload: { source, dest } })
+            });
+        }
+
+        let recordingStartTime = 0;
+        let recordingInterval = null;
+
+        async function startRecording() {
+            logToTerminal("Starting recording...");
+            const res = await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'start_record' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                const status = document.getElementById('recorder-status');
+                if (status) status.innerText = "Recording...";
+                const startBtn = document.getElementById('btn-start-record');
+                if (startBtn) startBtn.disabled = true;
+                const stopBtn = document.getElementById('btn-stop-record');
+                if (stopBtn) {
+                    stopBtn.disabled = false;
+                    stopBtn.style.background = "#ef4444";
+                }
+
+                recordingStartTime = Date.now();
+                recordingInterval = setInterval(updateRecorderTimer, 1000);
+            }
+        }
+
+        async function stopRecording() {
+            logToTerminal("Stopping recording...");
+            clearInterval(recordingInterval);
+            const res = await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'stop_record' })
+            });
+            const status = document.getElementById('recorder-status');
+            if (status) status.innerText = "Processing...";
+            const stopBtn = document.getElementById('btn-stop-record');
+            if (stopBtn) stopBtn.disabled = true;
+        }
+
+        function updateRecorderTimer() {
+            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+            const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const secs = (elapsed % 60).toString().padStart(2, '0');
+            const timer = document.getElementById('recorder-timer');
+            if (timer) timer.innerText = `${mins}:${secs}`;
+        }
+
+        async function takePhoto(camera) {
+            logToTerminal(`Taking photo with ${camera} camera...`);
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'take_photo',
+                    payload: { camera }
+                })
+            });
+        }
+
+        async function takeScreenshot() {
+            logToTerminal("Capturing screenshot...");
+            await fetch('/api/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'take_screenshot' })
+            });
+        }
+
+        function addToGallery(imageUrl, filename) {
+            const gallery = document.getElementById('camera-gallery');
+            if (!gallery) return;
+
+            // Remove placeholder if exists
+            const placeholder = gallery.querySelector('[style*="grid-column: 1/-1"]');
+            if (placeholder) placeholder.remove();
+
+            const container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.borderRadius = '8px';
+            container.style.overflow = 'hidden';
+            container.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+            container.style.cursor = 'pointer';
+            container.style.transition = 'transform 0.2s';
+            container.onmouseover = () => container.style.transform = 'scale(1.05)';
+            container.onmouseout = () => container.style.transform = 'scale(1)';
+
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.width = '100%';
+            img.style.height = '150px';
+            img.style.objectFit = 'cover';
+            img.onclick = () => window.open(imageUrl, '_blank');
+
+            const label = document.createElement('div');
+            label.style.position = 'absolute';
+            label.style.bottom = '0';
+            label.style.left = '0';
+            label.style.right = '0';
+            label.style.background = 'rgba(0,0,0,0.7)';
+            label.style.color = 'white';
+            label.style.padding = '5px';
+            label.style.fontSize = '10px';
+            label.style.textAlign = 'center';
+            label.innerText = filename;
+
+            container.appendChild(img);
+            container.appendChild(label);
+            gallery.insertBefore(container, gallery.firstChild);
+        }
+
+        function renderSms(messages) {
+            const containers = document.querySelectorAll('.sms-list');
+            containers.forEach(c => {
+                c.innerHTML = '';
+                messages.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = 'sms-item';
+                    const date = new Date(m.date).toLocaleString();
+                    div.innerHTML = `
+                        <div class="sms-header">
+                            <b>${m.address}</b>
+                            <span>${date}</span>
+                        </div>
+                        <div>${m.body}</div>
+                    `;
+                    c.appendChild(div);
+                });
+            });
+        }
+
+        // Clock
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }, 1000);
+
+    </script>
+</body>
+
+</html>

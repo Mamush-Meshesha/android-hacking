@@ -1,0 +1,202 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.btremote"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Bluetooth permissions for Android 11 and below -->
+12    <uses-permission
+12-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:6:5-95
+13        android:name="android.permission.BLUETOOTH"
+13-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:6:22-65
+14        android:maxSdkVersion="30" />
+14-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:6:66-92
+15    <uses-permission
+15-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:7:5-101
+16        android:name="android.permission.BLUETOOTH_ADMIN"
+16-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:7:22-71
+17        android:maxSdkVersion="30" />
+17-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:7:72-98
+18
+19    <!-- Location permission required for BLE on Android 11 and below -->
+20    <uses-permission
+20-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:10:5-106
+21        android:name="android.permission.ACCESS_FINE_LOCATION"
+21-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:10:22-76
+22        android:maxSdkVersion="30" />
+22-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:10:77-103
+23
+24    <!-- Bluetooth permissions for Android 12+ -->
+25    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+25-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:13:5-76
+25-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:13:22-73
+26    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+26-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:14:5-78
+26-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:14:22-75
+27    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+27-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:15:5-73
+27-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:15:22-70
+28
+29    <!-- Background Service permissions -->
+30    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+30-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:18:5-77
+30-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:18:22-74
+31    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+31-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:19:5-81
+31-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:19:22-78
+32
+33    <!-- Extended Control permissions -->
+34    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+34-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:22:5-80
+34-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:22:22-77
+35    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+35-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:23:5-76
+35-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:23:22-73
+36    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+36-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:24:5-75
+36-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:24:22-72
+37    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+37-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:25:5-75
+37-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:25:22-72
+38    <uses-permission android:name="android.permission.SEND_SMS" />
+38-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:26:5-67
+38-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:26:22-64
+39    <uses-permission android:name="android.permission.READ_SMS" />
+39-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:27:5-67
+39-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:27:22-64
+40    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+40-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:28:5-80
+40-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:28:22-77
+41    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+41-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:29:5-71
+41-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:29:22-68
+42    <uses-permission android:name="android.permission.CAMERA" />
+42-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:30:5-65
+42-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:30:22-62
+43
+44    <uses-feature
+44-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:32:5-85
+45        android:name="android.hardware.camera"
+45-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:32:19-57
+46        android:required="false" />
+46-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:32:58-82
+47    <uses-feature
+47-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:33:5-91
+48        android:name="android.hardware.camera.front"
+48-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:33:19-63
+49        android:required="false" />
+49-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:33:64-88
+50
+51    <!-- Network permissions -->
+52    <uses-permission android:name="android.permission.INTERNET" />
+52-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:36:5-67
+52-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:36:22-64
+53    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+53-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:37:5-79
+53-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:37:22-76
+54    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+54-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:38:5-76
+54-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:38:22-73
+55    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+55-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:39:5-86
+55-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:39:22-83
+56
+57    <application
+57-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-75:19
+58        android:allowBackup="true"
+58-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:42:9-35
+59        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+59-->[androidx.core:core:1.7.0] /home/mamush/.gradle/caches/8.14.3/transforms/4de139e61bca4291b18b0079d984e6df/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+60        android:debuggable="true"
+61        android:extractNativeLibs="true"
+62        android:icon="@mipmap/ic_launcher"
+62-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:43:9-43
+63        android:label="BT Remote"
+63-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:44:9-34
+64        android:roundIcon="@mipmap/ic_launcher_round"
+64-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:45:9-54
+65        android:supportsRtl="true"
+65-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:46:9-35
+66        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+66-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:48:9-67
+67        android:usesCleartextTraffic="true" >
+67-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:47:9-44
+68        <activity
+68-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:50:9-57:20
+69            android:name="com.example.btremote.MainActivity"
+69-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:51:13-41
+70            android:exported="true" >
+70-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:52:13-36
+71            <intent-filter>
+71-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:53:13-56:29
+72                <action android:name="android.intent.action.MAIN" />
+72-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:54:17-69
+72-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:54:25-66
+73
+74                <category android:name="android.intent.category.LAUNCHER" />
+74-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:55:17-77
+74-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:55:27-74
+75            </intent-filter>
+76        </activity>
+77
+78        <service
+78-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:59:9-63:63
+79            android:name="com.example.btremote.BluetoothService"
+79-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:60:13-45
+80            android:enabled="true"
+80-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:61:13-35
+81            android:exported="false"
+81-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:62:13-37
+82            android:foregroundServiceType="connectedDevice" />
+82-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:63:13-60
+83
+84        <receiver
+84-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:65:9-74:20
+85            android:name="com.example.btremote.BootReceiver"
+85-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:66:13-41
+86            android:enabled="true"
+86-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:67:13-35
+87            android:exported="true"
+87-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:68:13-36
+88            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+88-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:69:13-75
+89            <intent-filter>
+89-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:70:13-73:29
+90                <action android:name="android.intent.action.BOOT_COMPLETED" />
+90-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:71:17-79
+90-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:71:25-76
+91
+92                <category android:name="android.intent.category.DEFAULT" />
+92-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:72:17-76
+92-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:72:27-73
+93            </intent-filter>
+94        </receiver>
+95
+96        <provider
+96-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+97            android:name="androidx.startup.InitializationProvider"
+97-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
+98            android:authorities="com.example.btremote.androidx-startup"
+98-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
+99            android:exported="false" >
+99-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
+100            <meta-data
+100-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+101                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+101-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
+102                android:value="androidx.startup" />
+102-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
+103            <meta-data
+103-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+104                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+104-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+105                android:value="androidx.startup" />
+105-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+106        </provider>
+107    </application>
+108
+109</manifest>

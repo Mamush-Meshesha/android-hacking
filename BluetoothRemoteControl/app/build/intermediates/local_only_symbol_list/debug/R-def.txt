@@ -1,0 +1,10 @@
+R_DEF: Internal format may change without notice
+local
+id connectWifiButton
+id ipInput
+id startButton
+id statusText
+id stopButton
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round

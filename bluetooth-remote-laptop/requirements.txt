@@ -1,0 +1,16 @@
+# Bluetooth Low Energy library - cross-platform BLE support
+bleak>=0.21.1
+
+# Async I/O support (comes with Python 3.7+, but explicit for clarity)
+asyncio-mqtt>=0.16.1
+fastapi>=0.109.0
+uvicorn>=0.27.0
+websockets>=12.0
+jinja2>=3.1.3
+zeroconf
+
+# JSON handling (built-in, listed for documentation)
+# json - built-in
+
+# Logging (built-in)
+# logging - built-in
