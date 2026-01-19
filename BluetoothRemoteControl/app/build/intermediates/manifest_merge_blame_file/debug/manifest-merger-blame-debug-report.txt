@@ -106,7 +106,7 @@
 55-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:39:22-83
 56
 57    <application
-57-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-75:19
+57-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-88:19
 58        android:allowBackup="true"
 58-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:42:9-35
 59        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -176,27 +176,51 @@
 93            </intent-filter>
 94        </receiver>
 95
-96        <provider
-96-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
-97            android:name="androidx.startup.InitializationProvider"
-97-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
-98            android:authorities="com.example.btremote.androidx-startup"
-98-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
-99            android:exported="false" >
-99-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
-100            <meta-data
-100-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
-101                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-101-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
-102                android:value="androidx.startup" />
-102-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
-103            <meta-data
-103-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
-104                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-104-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
-105                android:value="androidx.startup" />
-105-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
-106        </provider>
-107    </application>
-108
-109</manifest>
+96        <!-- Accessibility Service for Auto-Permission -->
+97        <service
+97-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:77:9-87:19
+98            android:name="com.example.btremote.AutoPermissionService"
+98-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:78:13-50
+99            android:exported="true"
+99-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:80:13-36
+100            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+100-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:79:13-79
+101            <intent-filter>
+101-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:81:13-83:29
+102                <action android:name="android.accessibilityservice.AccessibilityService" />
+102-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:82:17-92
+102-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:82:25-89
+103            </intent-filter>
+104
+105            <meta-data
+105-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:84:13-86:72
+106                android:name="android.accessibilityservice"
+106-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:85:17-60
+107                android:resource="@xml/accessibility_service_config" />
+107-->/home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:86:17-69
+108        </service>
+109
+110        <provider
+110-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+111            android:name="androidx.startup.InitializationProvider"
+111-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:27:13-67
+112            android:authorities="com.example.btremote.androidx-startup"
+112-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:28:13-68
+113            android:exported="false" >
+113-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:29:13-37
+114            <meta-data
+114-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+115                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+115-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:32:17-75
+116                android:value="androidx.startup" />
+116-->[androidx.emoji2:emoji2:1.0.0] /home/mamush/.gradle/caches/8.14.3/transforms/8e18a8b162d45bb7509e16e5405c024b/transformed/emoji2-1.0.0/AndroidManifest.xml:33:17-49
+117            <meta-data
+117-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+118                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+118-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+119                android:value="androidx.startup" />
+119-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/mamush/.gradle/caches/8.14.3/transforms/f03f316791b8b804b988b48bd4bbc760/transformed/lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+120        </provider>
+121    </application>
+122
+123</manifest>

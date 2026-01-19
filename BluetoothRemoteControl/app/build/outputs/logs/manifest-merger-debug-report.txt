@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-77:12
-INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-77:12
-INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-77:12
-INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-77:12
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-90:12
+INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-90:12
+INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-90:12
+INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:2:1-90:12
 MERGED from [androidx.core:core-ktx:1.7.0] /home/mamush/.gradle/caches/8.14.3/transforms/e35244965f7f42ae5daa8599ffc1a60f/transformed/core-ktx-1.7.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.material:material:1.5.0] /home/mamush/.gradle/caches/8.14.3/transforms/adca0d2260a40966e0ecc135209026cf/transformed/material-1.5.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/mamush/.gradle/caches/8.14.3/transforms/35c1d39e723011cab5423b093474cec8/transformed/constraintlayout-2.1.3/AndroidManifest.xml:2:1-11:12
@@ -156,8 +156,8 @@ ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/m
 	android:name
 		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:39:22-83
 application
-ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-75:19
-INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-75:19
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-88:19
+INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:41:5-88:19
 MERGED from [com.google.android.material:material:1.5.0] /home/mamush/.gradle/caches/8.14.3/transforms/adca0d2260a40966e0ecc135209026cf/transformed/material-1.5.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.5.0] /home/mamush/.gradle/caches/8.14.3/transforms/adca0d2260a40966e0ecc135209026cf/transformed/material-1.5.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/mamush/.gradle/caches/8.14.3/transforms/35c1d39e723011cab5423b093474cec8/transformed/constraintlayout-2.1.3/AndroidManifest.xml:9:5-20
@@ -236,6 +236,26 @@ category#android.intent.category.DEFAULT
 ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:72:17-76
 	android:name
 		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:72:27-73
+service#com.example.btremote.AutoPermissionService
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:77:9-87:19
+	android:exported
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:80:13-36
+	android:permission
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:79:13-79
+	android:name
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:78:13-50
+intent-filter#action:name:android.accessibilityservice.AccessibilityService
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:81:13-83:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:82:17-92
+	android:name
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:82:25-89
+meta-data#android.accessibilityservice
+ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:84:13-86:72
+	android:resource
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:86:17-69
+	android:name
+		ADDED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml:85:17-60
 uses-sdk
 INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/mamush/Desktop/project/zeroday/BluetoothRemoteControl/app/src/main/AndroidManifest.xml
